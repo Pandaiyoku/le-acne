@@ -4,11 +4,11 @@ import type { Balance, Severity } from "./types";
 export const DEFAULT_SEVERITIES: Severity[] = [
   { level: 1, label: "Minimal Discomfort", description: "Brief and low-intensity physical discomfort.", price: 1 },
   { level: 2, label: "Low Discomfort", description: "Noticeable discomfort with limited sensitivity.", price: 2 },
-  { level: 3, label: "Moderate Discomfort", description: "Sustained sensitivity requiring attention.", price: 4 },
-  { level: 4, label: "Elevated Discomfort", description: "Clear pressure and localized sensitivity.", price: 7 },
-  { level: 5, label: "High Discomfort", description: "Significant sensitivity with persistent pressure.", price: 11 },
-  { level: 6, label: "Intense Discomfort", description: "High-intensity pressure and pronounced sensitivity.", price: 16 },
-  { level: 7, label: "Lasting Pain with Bleeding", description: "Lasting pain accompanied by bleeding; maximum standard classification.", price: 25 },
+  { level: 3, label: "Moderate Discomfort", description: "Sustained sensitivity requiring attention.", price: 3 },
+  { level: 4, label: "Elevated Discomfort", description: "Clear pressure and localized sensitivity.", price: 4 },
+  { level: 5, label: "High Discomfort", description: "Significant sensitivity with persistent pressure.", price: 5 },
+  { level: 6, label: "Intense Discomfort", description: "High-intensity pressure and pronounced sensitivity.", price: 6 },
+  { level: 7, label: "Lasting Pain with Bleeding", description: "Lasting pain accompanied by bleeding; maximum standard classification.", price: 7 },
 ];
 
 const root = "private/ledger";
