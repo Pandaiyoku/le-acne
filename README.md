@@ -2,6 +2,8 @@
 
 A private, single-user debt ledger built with Next.js App Router, Tailwind CSS, Firebase Authentication, and Firestore.
 
+Preview deployments are published from the `preview` branch.
+
 ## Local setup
 
 1. Create a Firebase project and enable **Email/Password** under Authentication.
