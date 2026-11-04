@@ -4,10 +4,9 @@ service cloud.firestore {
     function authorized() {
       return request.auth != null &&
         request.auth.token.email != null &&
-        request.auth.token.email == request.auth.token.email &&
         request.auth.token.email == 'REPLACE_WITH_YOUR_ALLOWED_EMAIL';
     }
-    // Deploy after replacing the literal above with the same value as your env var.
+    // Deploy after replacing the literal above with the same AUTHORIZED_EMAIL value.
     match /private/{document=**} { allow read, write: if authorized(); }
   }
 }

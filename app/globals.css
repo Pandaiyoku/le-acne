@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+:root { color-scheme: dark; }
 * { box-sizing: border-box; }
-body { margin: 0; background: #120d17; color: #faf7ff; font-family: Arial, Helvetica, sans-serif; }
+html { background: #07090d; }
+body { min-height: 100vh; margin: 0; background: #07090d; color: #f4f7fb; font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif; }
 button, input, textarea { font: inherit; }
-::selection { background: #d7ff49; color: #120d17; }
+button { -webkit-tap-highlight-color: transparent; }
+::selection { color: #06111f; background: #9dd9ff; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #090c12; }
+::-webkit-scrollbar-thumb { border: 2px solid #090c12; border-radius: 999px; background: #415064; }
+
+@layer components {
+  .shell { @apply relative min-h-screen overflow-hidden bg-[#07090d]; }
+  .ambient { @apply pointer-events-none absolute rounded-full blur-3xl; }
+  .glass { @apply border border-white/10 bg-white/[0.045] backdrop-blur-md; }
+  .field { @apply w-full rounded-xl border border-white/10 bg-black/20 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-sky-300/60 focus:ring-4 focus:ring-sky-300/10; }
+  .label { @apply mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-slate-400; }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-200/80; }
+}
