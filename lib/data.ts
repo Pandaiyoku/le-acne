@@ -1,4 +1,4 @@
-import { doc, runTransaction, collection, serverTimestamp, Timestamp, type Firestore } from "firebase/firestore";
+import { doc, runTransaction, collection, getDocs, serverTimestamp, Timestamp, type Firestore } from "firebase/firestore";
 import type { Balance, Severity } from "./types";
 
 export const DEFAULT_SEVERITIES: Severity[] = [
@@ -21,5 +21,27 @@ export async function changeBalance(db: Firestore, impact: number, type: "acne" 
     const next = { official: Math.min(0, current.official + impact), hypothetical: current.hypothetical + impact };
     tx.set(balanceRef, next);
     tx.set(doc(historyRef), { type, description, impact, officialAfter: next.official, hypotheticalAfter: next.hypothetical, createdAt: occurredAt ? Timestamp.fromDate(occurredAt) : serverTimestamp() });
+  });
+}
+
+export async function removeHistoryEntry(db: Firestore, historyId: string) {
+  const balanceRef = doc(db, root, "balance", "current");
+  const historyRef = collection(db, root, "history");
+  const historySnapshot = await getDocs(historyRef);
+  await runTransaction(db, async tx => {
+    const remaining = historySnapshot.docs
+      .filter(entry => entry.id !== historyId)
+      .map(entry => ({ ref: entry.ref, ...entry.data() as { impact?: number; createdAt?: { seconds: number; nanoseconds?: number } } }))
+      .sort((a, b) => ((a.createdAt?.seconds ?? 0) * 1_000_000_000 + (a.createdAt?.nanoseconds ?? 0)) - ((b.createdAt?.seconds ?? 0) * 1_000_000_000 + (b.createdAt?.nanoseconds ?? 0)));
+    let official = 0;
+    let hypothetical = 0;
+    for (const entry of remaining) {
+      const impact = Number(entry.impact ?? 0);
+      official = Math.min(0, official + impact);
+      hypothetical += impact;
+      tx.update(entry.ref, { officialAfter: official, hypotheticalAfter: hypothetical });
+    }
+    tx.delete(doc(historyRef, historyId));
+    tx.set(balanceRef, { official, hypothetical });
   });
 }
