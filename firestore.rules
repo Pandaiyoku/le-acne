@@ -3,7 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function authorized() {
       return request.auth != null &&
-        request.auth.token.email == 'henry.jackson19345@gmail.com';
+        request.auth.uid == 'Qwc1ZM4xDNagGcZrhhdBDQ1FUzj1';
     }
 
     match /private/{document=**} {
